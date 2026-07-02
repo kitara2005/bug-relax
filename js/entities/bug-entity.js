@@ -37,6 +37,11 @@ export class BugEntity {
     return Math.sin(this.age * 2.2 + this.phase) * 5;
   }
 
+  /** About to fly away (last 2s of lifetime, or already fleeing) — UI warns. */
+  get isLeavingSoon() {
+    return this.state === 'escaping' || (this.state === 'wander' && this.lifetime - this.age < 2);
+  }
+
   update(dt, speedMult, bounds) {
     this.age += dt;
     this.flashT = Math.max(0, this.flashT - dt);

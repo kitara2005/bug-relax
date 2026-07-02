@@ -108,6 +108,10 @@ class Game {
       if (bug.escaped) {
         bug.escaped = false; // handle once
         escapedAny = true;
+        // show the life loss where the bug left (clamped back into view)
+        const tx = Math.min(Math.max(bug.x, 40), bounds.w - 40);
+        const ty = Math.min(Math.max(bug.y, 90), bounds.h - 40);
+        this.texts.add('-1 🧡', tx, ty, '#ff9d9d', 17);
         if (this.state.registerEscape().gameOver) outOfLives = true;
       }
     }
@@ -142,7 +146,16 @@ class Game {
   }
 
   frame(now) {
-    const dt = Math.min((now - this.lastFrame) / 1000, 0.05); // clamp long gaps (tab switch)
+    // hard pause while the tab/app is in the background: some browsers keep
+    // firing rAF at a reduced rate, which would let bugs escape unseen and
+    // silently drain lives
+    if (document.hidden) {
+      this.lastFrame = now;
+      requestAnimationFrame((t) => this.frame(t));
+      return;
+    }
+
+    const dt = Math.min((now - this.lastFrame) / 1000, 0.05); // clamp long gaps
     this.lastFrame = now;
     this.elapsed += dt;
 

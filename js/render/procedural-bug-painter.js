@@ -190,6 +190,11 @@ export function drawBug(ctx, bug, time, sprite = null) {
   ctx.translate(x, y);
   ctx.rotate(Math.sin(t * 1.3) * 0.08); // gentle sway
 
+  // blink warning while about to fly away, so life loss is never a surprise
+  if (bug.isLeavingSoon) {
+    ctx.globalAlpha = 0.65 + 0.35 * Math.sin(time * 12);
+  }
+
   // soft aura behind every bug — cached sprite, not a per-frame gradient
   ctx.globalAlpha = 0.4;
   ctx.drawImage(getGlowSprite(bug.type.glow), -s * 0.9, -s * 0.9, s * 1.8, s * 1.8);
