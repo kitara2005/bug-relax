@@ -38,8 +38,8 @@ Same tap mechanic; tiers differ in damage + cooldown + beam color. Names in Viet
 
 ### Levels & Difficulty
 - Thresholds: 0, 250, 650, 1250, 2100, 3250, 4750, 6650, 9000, then +2600/level.
-- Per level: spawn interval 2400ms → min 900ms, max concurrent bugs 4 → 14
-  (+1 per level — screen fills up over time), speed ×(1 + 0.06/level), HP bonus +1 per 2 levels.
+- Per level: spawn interval 1200ms → min 450ms, max concurrent bugs 8 → 28
+  (+2 per level — screen fills up over time), speed ×(1 + 0.06/level), HP bonus +1 per 2 levels.
 - Bug lifetime generous (8–15s per type) so pace stays relaxed even when dense.
 
 ### Power-up Orbs (temporary super weapons)
