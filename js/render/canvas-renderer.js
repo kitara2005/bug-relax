@@ -39,8 +39,6 @@ export class CanvasRenderer {
     ctx.strokeStyle = color;
     ctx.globalAlpha = 0.7;
     ctx.lineWidth = 1.5;
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 10;
     ctx.beginPath();
     ctx.arc(x, y, 14, 0, Math.PI * 2);
     ctx.stroke();

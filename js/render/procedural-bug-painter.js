@@ -1,6 +1,8 @@
 // Draws glowing kawaii bugs procedurally (top-down, head up). When a real
 // sprite PNG is loaded it is used instead, keeping the same glow aura.
 
+import { getGlowSprite } from './glow-sprite-cache.js';
+
 function ellipse(ctx, x, y, rx, ry, fill) {
   ctx.fillStyle = fill;
   ctx.beginPath();
@@ -188,12 +190,10 @@ export function drawBug(ctx, bug, time, sprite = null) {
   ctx.translate(x, y);
   ctx.rotate(Math.sin(t * 1.3) * 0.08); // gentle sway
 
-  // soft aura behind every bug
-  const aura = ctx.createRadialGradient(0, 0, s * 0.1, 0, 0, s * 0.75);
-  aura.addColorStop(0, bug.type.glow + '55');
-  aura.addColorStop(1, bug.type.glow + '00');
-  ctx.fillStyle = aura;
-  ctx.fillRect(-s, -s, s * 2, s * 2);
+  // soft aura behind every bug — cached sprite, not a per-frame gradient
+  ctx.globalAlpha = 0.4;
+  ctx.drawImage(getGlowSprite(bug.type.glow), -s * 0.9, -s * 0.9, s * 1.8, s * 1.8);
+  ctx.globalAlpha = 1;
 
   if (sprite) {
     const d = s * 1.1;

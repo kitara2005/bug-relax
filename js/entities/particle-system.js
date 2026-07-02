@@ -1,6 +1,8 @@
 // Lightweight particle system: hit sparks, death bursts, tap ripples, level confetti.
 // All drawn with additive blending for the bioluminescent look.
 
+import { getGlowSprite } from '../render/glow-sprite-cache.js';
+
 const MAX_PARTICLES = 400;
 
 export class ParticleSystem {
@@ -41,9 +43,9 @@ export class ParticleSystem {
     this.ripples.push({ x, y, color, r: bugSize * 0.4, maxR: bugSize * 1.6, life: 0.45, maxLife: 0.45 });
   }
 
-  /** Tap that hit nothing — a soft ripple, no punishment. */
-  spawnMissRipple(x, y, color) {
-    this.ripples.push({ x, y, color, r: 6, maxR: 34, life: 0.35, maxLife: 0.35 });
+  /** Tap ripple — also used (larger) to show a splash weapon's blast radius. */
+  spawnMissRipple(x, y, color, maxR = 34) {
+    this.ripples.push({ x, y, color, r: 6, maxR, life: 0.35, maxLife: 0.35 });
   }
 
   /** Level-up celebration: gentle light confetti across the top. */
@@ -90,16 +92,13 @@ export class ParticleSystem {
 
     for (const p of this.particles) {
       const t = p.life / p.maxLife;
+      // pre-rendered glow dot instead of shadowBlur — the halo is baked into
+      // the sprite, so draw at 4x the particle radius
+      const d = p.size * (0.5 + t * 0.5) * 4;
       ctx.globalAlpha = t;
-      ctx.fillStyle = p.color;
-      ctx.shadowColor = p.color;
-      ctx.shadowBlur = 8;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size * (0.5 + t * 0.5), 0, Math.PI * 2);
-      ctx.fill();
+      ctx.drawImage(getGlowSprite(p.color), p.x - d / 2, p.y - d / 2, d, d);
     }
 
-    ctx.shadowBlur = 0;
     for (const r of this.ripples) {
       const t = r.life / r.maxLife;
       const radius = r.r + (r.maxR - r.r) * (1 - t);

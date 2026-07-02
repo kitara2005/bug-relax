@@ -2,8 +2,11 @@
 // otherwise paints a procedural scene: sky gradient, moon, stars, hill
 // silhouettes, plus drifting light motes for depth (always procedural).
 
+import { getGlowSprite } from './glow-sprite-cache.js';
+
 const STAR_COUNT = 60;
 const MOTE_COUNT = 18;
+const MOTE_COLOR = '#bcd8ff';
 
 export class NightBackgroundPainter {
   constructor(image = null) {
@@ -108,20 +111,18 @@ export class NightBackgroundPainter {
       ctx.restore();
     }
 
-    // drifting glowing motes — the "atmosphere" layer
+    // drifting glowing motes — the "atmosphere" layer (cached glow sprite,
+    // no per-frame shadowBlur)
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
+    const moteSprite = getGlowSprite(MOTE_COLOR);
     for (const m of this.motes) {
       const y = (m.y - time * m.speed) % (h + 40);
       const drawY = y < -20 ? y + h + 40 : y;
       const x = m.x + Math.sin(time * 0.4 + m.phase) * 24;
+      const d = m.size * 4;
       ctx.globalAlpha = 0.12 + 0.1 * Math.sin(time + m.phase);
-      ctx.fillStyle = '#bcd8ff';
-      ctx.shadowColor = '#bcd8ff';
-      ctx.shadowBlur = 8;
-      ctx.beginPath();
-      ctx.arc(x, drawY, m.size, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.drawImage(moteSprite, x - d / 2, drawY - d / 2, d, d);
     }
     ctx.restore();
   }
