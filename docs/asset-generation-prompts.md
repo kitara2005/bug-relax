@@ -118,8 +118,8 @@ Dòng style chung cho icon đầu tiên (các icon sau thêm "Same art style as 
 - [x] track-3.mp3
 - [x] track-4.mp3
 - [x] track-5.mp3
-- [ ] weapon-1.png … weapon-8.png (8 icon vũ khí)
-- [ ] super-storm.png, super-nova.png, super-zephyr.png (3 icon súng đặc biệt)
+- [x] weapon-1.png … weapon-8.png (8 icon vũ khí)
+- [x] super-storm.png, super-nova.png, super-zephyr.png (3 icon súng đặc biệt)
 
 Thả file đúng tên vào đúng thư mục là xong — không cần sửa code.
 Ảnh bug nên là PNG vuông (1024×1024), nền trong suốt hoặc đen trơn.
