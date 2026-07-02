@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#070b1e" />
+  <title>Đêm Đom Đóm — game relax bắt bug</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌙</text></svg>" />
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+
+  <!-- HUD overlay: score / level / weapon / combo -->
+  <div id="hud" class="hud hidden">
+    <div class="hud-left">
+      <div id="hud-score" class="hud-score">0</div>
+      <div id="hud-level" class="hud-level">Cấp 1</div>
+    </div>
+    <div class="hud-center">
+      <div id="hud-combo" class="hud-combo hidden">
+        <span id="hud-combo-count">0</span> combo · <span id="hud-combo-mult">×1</span>
+      </div>
+    </div>
+    <div class="hud-right">
+      <div id="hud-weapon" class="hud-weapon">🔦 Đèn Pin Nhỏ</div>
+      <button id="btn-mute" class="btn-mute" aria-label="Bật/tắt âm thanh">🔊</button>
+    </div>
+  </div>
+
+  <!-- Level-up banner -->
+  <div id="banner" class="banner hidden"></div>
+
+  <!-- Start screen -->
+  <div id="start-overlay" class="start-overlay">
+    <h1 class="start-title">🌙 Đêm Đom Đóm</h1>
+    <p class="start-subtitle">Khu vườn đêm đầy côn trùng phát sáng.<br />Chạm vào chúng để thu thập ánh sáng — không thua, chỉ thư giãn.</p>
+    <button id="btn-start" class="btn-start">Chạm để bắt đầu ✨</button>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

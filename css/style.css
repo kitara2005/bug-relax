@@ -1,0 +1,158 @@
+/* Đêm Đom Đóm — global styles: fullscreen canvas + glassy glowing HUD */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #070b1e;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#game-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none; /* prevent scroll/zoom stealing taps */
+  cursor: none;       /* custom glow cursor drawn on canvas */
+}
+
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: calc(10px + env(safe-area-inset-top)) 16px 0;
+  pointer-events: none; /* taps pass through to canvas */
+  color: #dfe8ff;
+}
+
+.hud-score {
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 700;
+  text-shadow: 0 0 14px rgba(140, 190, 255, 0.8);
+}
+
+.hud-level {
+  font-size: clamp(12px, 2vw, 15px);
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.hud-combo {
+  font-size: clamp(14px, 2.5vw, 20px);
+  font-weight: 600;
+  color: #ffe9a8;
+  text-shadow: 0 0 12px rgba(255, 214, 120, 0.9);
+  animation: combo-pop 0.25s ease-out;
+}
+
+@keyframes combo-pop {
+  0% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-weapon {
+  font-size: clamp(12px, 2vw, 15px);
+  background: rgba(20, 30, 70, 0.55);
+  border: 1px solid rgba(130, 170, 255, 0.25);
+  border-radius: 999px;
+  padding: 6px 12px;
+  backdrop-filter: blur(6px);
+}
+
+.btn-mute {
+  pointer-events: auto;
+  background: rgba(20, 30, 70, 0.55);
+  border: 1px solid rgba(130, 170, 255, 0.25);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 17px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- Level-up banner ---------- */
+.banner {
+  position: fixed;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #fff3c4;
+  font-size: clamp(20px, 4.5vw, 34px);
+  font-weight: 700;
+  text-shadow: 0 0 22px rgba(255, 216, 130, 0.95), 0 0 60px rgba(255, 190, 90, 0.5);
+  pointer-events: none;
+  animation: banner-in 2.6s ease-out forwards;
+  white-space: nowrap;
+}
+
+@keyframes banner-in {
+  0% { opacity: 0; transform: translateX(-50%) translateY(18px) scale(0.9); }
+  12% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.05); }
+  20% { transform: translateX(-50%) scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-14px); }
+}
+
+/* ---------- Start screen ---------- */
+.start-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 24px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 35%, rgba(30, 45, 110, 0.5), rgba(7, 11, 30, 0.92) 70%);
+  color: #e6edff;
+  z-index: 10;
+}
+
+.start-title {
+  font-size: clamp(34px, 8vw, 62px);
+  text-shadow: 0 0 30px rgba(150, 200, 255, 0.75);
+}
+
+.start-subtitle {
+  font-size: clamp(14px, 3vw, 18px);
+  line-height: 1.7;
+  opacity: 0.85;
+  max-width: 460px;
+}
+
+.btn-start {
+  font-size: clamp(16px, 3.5vw, 21px);
+  font-weight: 600;
+  color: #0a1030;
+  background: linear-gradient(135deg, #ffe9a8, #a8d8ff);
+  border: none;
+  border-radius: 999px;
+  padding: 14px 34px;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(190, 220, 255, 0.55);
+  transition: transform 0.15s ease;
+}
+
+.btn-start:active { transform: scale(0.94); }
