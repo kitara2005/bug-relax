@@ -12,13 +12,13 @@ export function shoot(game, x, y) {
 
   game.audio.playShoot();
 
-  // power-up orb takes priority — break it to claim a super weapon
+  // power-up orb: the shot chips/breaks it AND still passes through to bugs
+  // behind it (uses `weapon` captured above, so breaking it doesn't retro-apply
+  // the freshly-claimed super to this same tap)
   const orbHit = game.powerUps.tryHit(x, y);
   if (orbHit) {
     game.particles.spawnHitSparks(orbHit.x, orbHit.y, orbHit.color, 10);
     if (orbHit.broken) claimSuperWeapon(game, orbHit);
-    else game.audio.playHit();
-    return;
   }
 
   // splash weapons hit every bug near the tap; others hit the topmost one
@@ -27,7 +27,8 @@ export function shoot(game, x, y) {
     : [[...game.bugs].reverse().find((b) => b.state !== 'gone' && b.containsPoint(x, y))].filter(Boolean);
 
   if (!targets.length) {
-    game.particles.spawnMissRipple(x, y, weapon.color);
+    if (!orbHit) game.particles.spawnMissRipple(x, y, weapon.color);
+    else if (!orbHit.broken) game.audio.playHit(); // feedback for a chip that hit nothing else
     return;
   }
 

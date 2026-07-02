@@ -122,7 +122,7 @@ export class BugEntity {
 
   containsPoint(px, py) {
     const dx = px - this.x;
-    const dy = py - this.y;
+    const dy = py - (this.y + this.bobY); // match the drawn (bobbing) position
     return dx * dx + dy * dy <= this.hitRadius * this.hitRadius;
   }
 }

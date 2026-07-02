@@ -13,6 +13,7 @@ export class AudioManager {
     this.muted = false;
     this.tracks = [];         // HTMLAudioElement | null per track
     this.currentTrack = -1;
+    this.fadeInterval = null; // active crossfade timer (only one at a time)
     this.prepareTracks();
   }
 
@@ -57,8 +58,10 @@ export class AudioManager {
       to.currentTime = 0;
       to.play().catch(() => {}); // ignore autoplay rejections
     }
-    // simple linear crossfade
-    const fade = setInterval(() => {
+    // simple linear crossfade — cancel any in-flight fade so overlapping
+    // level-ups don't spawn rival intervals fighting over the same volumes
+    if (this.fadeInterval) clearInterval(this.fadeInterval);
+    this.fadeInterval = setInterval(() => {
       let done = true;
       if (from && from.volume > 0) {
         from.volume = Math.max(from.volume - FADE_STEP, 0);
@@ -69,7 +72,10 @@ export class AudioManager {
         to.volume = Math.min(to.volume + FADE_STEP, MUSIC_VOLUME);
         if (to.volume < MUSIC_VOLUME) done = false;
       }
-      if (done) clearInterval(fade);
+      if (done) {
+        clearInterval(this.fadeInterval);
+        this.fadeInterval = null;
+      }
     }, 60);
   }
 

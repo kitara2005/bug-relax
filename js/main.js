@@ -64,6 +64,7 @@ class Game {
 
   /** Out of lives: play stops (update loop freezes), show the summary. */
   endRun() {
+    this.input.down = false; // drop any held auto-fire so restart starts clean
     this.audio.playGameOver();
     this.hud.showGameOver(this.state);
   }
@@ -78,6 +79,7 @@ class Game {
     this.particles = new ParticleSystem();
     this.texts = new FloatingTextSystem();
     this.lastSuperSec = 0;
+    this.input.down = false; // never carry a held pointer into the new run
     this.hud.hideGameOver();
     this.hud.update(this.state);
     this.audio.setMusicForLevel(this.state.level);
@@ -121,7 +123,8 @@ class Game {
       bug.update(dt, difficulty.speedMult, bounds);
       if (bug.escaped) {
         bug.escaped = false; // handle once
-        if (bug.isBonus) continue; // frenzy bugs escape for free
+        if (bug.isBonus) continue;         // frenzy bugs escape for free
+        if (this.state.phase === 'gameover') continue; // already dead, don't over-count
         escapedAny = true;
         // show the life loss where the bug left (clamped back into view)
         const tx = Math.min(Math.max(bug.x, 40), bounds.w - 40);
