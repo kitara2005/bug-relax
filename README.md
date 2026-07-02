@@ -11,7 +11,7 @@ python3 -m http.server 8080
 
 ## Gameplay
 - Bug xuất hiện từ từ ở vị trí ngẫu nhiên, lơ lửng vài giây rồi bay đi
-- Mỗi lượt có **50 mạng** — bug trốn thoát trừ 1 mạng + mất combo; hết mạng thì chơi lại
+- Mỗi lượt có **15 mạng** — bug trốn thoát trừ 1 mạng + mất combo; hết mạng thì chơi lại
 - Tap/click để bắn — mỗi cấp mở **vũ khí mạnh và nhanh hơn** (8 tier)
 - Bắn trúng liên tiếp → **combo** nhân điểm (tối đa ×5)
 - **Orb pha lê** thỉnh thoảng xuất hiện: bắn 2 phát vỡ → nhận súng đặc biệt 15 giây (dame ×3 / bắn lan / liên thanh)

@@ -6,7 +6,7 @@ import { applySuperToTier, SUPER_DURATION } from '../config/super-weapons-config
 
 const COMBO_PER_MULT = 5; // every 5 combo → +1 multiplier
 const MAX_MULT = 5;
-const STARTING_LIVES = 50; // one life lost per escaped bug; 0 → game over
+const STARTING_LIVES = 15; // one life lost per escaped bug; 0 → game over
 
 export class GameState {
   constructor() {
