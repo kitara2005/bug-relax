@@ -78,6 +78,19 @@ html, body {
   backdrop-filter: blur(6px);
 }
 
+/* golden glowing chip while a super weapon is active */
+.hud-weapon.super {
+  border-color: rgba(255, 214, 120, 0.75);
+  color: #fff3c4;
+  box-shadow: 0 0 14px rgba(255, 214, 120, 0.45);
+  animation: super-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes super-pulse {
+  from { box-shadow: 0 0 8px rgba(255, 214, 120, 0.35); }
+  to { box-shadow: 0 0 18px rgba(255, 214, 120, 0.65); }
+}
+
 .btn-mute {
   pointer-events: auto;
   background: rgba(20, 30, 70, 0.55);

@@ -2,6 +2,7 @@
 
 import { levelForScore, difficultyForLevel } from '../config/levels-config.js';
 import { weaponForLevel } from '../config/weapons-config.js';
+import { applySuperToTier, SUPER_DURATION } from '../config/super-weapons-config.js';
 
 const COMBO_PER_MULT = 5; // every 5 combo → +1 multiplier
 const MAX_MULT = 5;
@@ -13,6 +14,8 @@ export class GameState {
     this.bestCombo = 0;
     this.level = 1;
     this.phase = 'start'; // 'start' | 'playing'
+    this.superWeapon = null; // temporary weapon from a broken power-up orb
+    this.superTimeLeft = 0;
   }
 
   get multiplier() {
@@ -20,7 +23,23 @@ export class GameState {
   }
 
   get weapon() {
-    return weaponForLevel(this.level);
+    return this.superWeapon ?? weaponForLevel(this.level);
+  }
+
+  /** Claim a super weapon for SUPER_DURATION seconds. */
+  activateSuper(superDef) {
+    this.superWeapon = applySuperToTier(superDef, weaponForLevel(this.level));
+    this.superTimeLeft = SUPER_DURATION;
+  }
+
+  /** Tick timers; reports when the super weapon just expired. */
+  update(dt) {
+    if (this.superTimeLeft <= 0) return { superEnded: false };
+    this.superTimeLeft -= dt;
+    if (this.superTimeLeft > 0) return { superEnded: false };
+    this.superTimeLeft = 0;
+    this.superWeapon = null;
+    return { superEnded: true };
   }
 
   get difficulty() {

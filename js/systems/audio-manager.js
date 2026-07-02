@@ -108,6 +108,12 @@ export class AudioManager {
     this.note(196, { type: 'sine', duration: 0.35, volume: 0.07 });
   }
 
+  playPowerUp() {
+    [659, 880, 1175].forEach((f, i) =>
+      this.note(f, { type: 'triangle', duration: 0.22, volume: 0.15, delay: i * 0.06 }),
+    );
+  }
+
   playLevelUp() {
     [523, 659, 784, 1047].forEach((f, i) =>
       this.note(f, { type: 'triangle', duration: 0.28, volume: 0.14, delay: i * 0.09 }),

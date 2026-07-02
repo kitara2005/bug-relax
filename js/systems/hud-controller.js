@@ -37,7 +37,16 @@ export class HudController {
   update(state) {
     this.el.score.textContent = state.score.toLocaleString('vi-VN');
     this.el.level.textContent = `Cấp ${state.level}`;
-    this.el.weapon.textContent = `${state.weapon.icon} ${state.weapon.name}`;
+
+    // super weapon shows its countdown and a golden chip
+    if (state.superTimeLeft > 0) {
+      this.el.weapon.textContent =
+        `${state.weapon.icon} ${state.weapon.name} · ${Math.ceil(state.superTimeLeft)}s`;
+      this.el.weapon.classList.add('super');
+    } else {
+      this.el.weapon.textContent = `${state.weapon.icon} ${state.weapon.name}`;
+      this.el.weapon.classList.remove('super');
+    }
 
     if (state.combo >= 2) {
       this.el.combo.classList.remove('hidden');
@@ -53,8 +62,12 @@ export class HudController {
   }
 
   showLevelUpBanner(level, weapon) {
+    this.showBanner(`✨ Cấp ${level} — ${weapon.icon} ${weapon.name}!`);
+  }
+
+  showBanner(text) {
     const banner = this.el.banner;
-    banner.textContent = `✨ Cấp ${level} — ${weapon.icon} ${weapon.name}!`;
+    banner.textContent = text;
     banner.classList.remove('hidden');
     // restart the CSS animation
     banner.style.animation = 'none';

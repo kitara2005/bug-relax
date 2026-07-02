@@ -21,7 +21,7 @@ export function levelForScore(score) {
 export function difficultyForLevel(level) {
   return {
     speedMult: 1 + (level - 1) * 0.06,                       // bugs drift faster
-    hpBonus: Math.floor((level - 1) / 3),                    // +1 HP per 3 levels
+    hpBonus: Math.floor((level - 1) / 2),                    // +1 HP per 2 levels
     spawnIntervalMs: Math.max(2400 - (level - 1) * 170, 900), // denser spawns over time
     maxBugs: Math.min(4 + (level - 1), 14),                   // screen fills up as levels rise
   };

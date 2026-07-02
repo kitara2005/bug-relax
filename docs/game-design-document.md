@@ -39,8 +39,16 @@ Same tap mechanic; tiers differ in damage + cooldown + beam color. Names in Viet
 ### Levels & Difficulty
 - Thresholds: 0, 250, 650, 1250, 2100, 3250, 4750, 6650, 9000, then +2600/level.
 - Per level: spawn interval 2400ms → min 900ms, max concurrent bugs 4 → 14
-  (+1 per level — screen fills up over time), speed ×(1 + 0.06/level), HP bonus +1 per 3 levels.
+  (+1 per level — screen fills up over time), speed ×(1 + 0.06/level), HP bonus +1 per 2 levels.
 - Bug lifetime generous (8–15s per type) so pace stays relaxed even when dense.
+
+### Power-up Orbs (temporary super weapons)
+- From level 2, a glowing crystal orb spawns every ~18-32s (one at a time, stays 10s).
+- Shoot it twice to break → random super weapon for 15s (HUD shows golden countdown chip):
+  - ⚡ Bão Sao Băng — damage ×3
+  - 🎆 Pháo Hoa Nova — splash: every bug within 130px of the tap takes the hit
+  - 🌪️ Gió Thần Tốc — cooldown 70ms (rapid fire)
+- Expires back to the level-tier weapon. Orb ignored → fades away, no penalty.
 - Level up: banner, weapon swap, light confetti, possible music track change.
 
 ## Art Direction
