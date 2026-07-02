@@ -108,6 +108,12 @@ export class AudioManager {
     this.note(196, { type: 'sine', duration: 0.35, volume: 0.07 });
   }
 
+  playGameOver() {
+    [392, 330, 262].forEach((f, i) =>
+      this.note(f, { type: 'sine', duration: 0.4, volume: 0.12, delay: i * 0.18 }),
+    );
+  }
+
   playPowerUp() {
     [659, 880, 1175].forEach((f, i) =>
       this.note(f, { type: 'triangle', duration: 0.22, volume: 0.15, delay: i * 0.06 }),

@@ -50,6 +50,24 @@ html, body {
   margin-top: 2px;
 }
 
+.hud-lives {
+  font-size: clamp(12px, 2vw, 15px);
+  margin-top: 2px;
+  color: #ffcfa8;
+  text-shadow: 0 0 10px rgba(255, 180, 120, 0.6);
+}
+
+/* low on lives: urgent but still gentle */
+.hud-lives.low {
+  color: #ff9d9d;
+  animation: lives-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes lives-pulse {
+  from { opacity: 0.75; }
+  to { opacity: 1; }
+}
+
 .hud-combo {
   font-size: clamp(14px, 2.5vw, 20px);
   font-weight: 600;

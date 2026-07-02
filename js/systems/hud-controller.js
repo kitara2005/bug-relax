@@ -10,16 +10,24 @@ export class HudController {
       combo: document.getElementById('hud-combo'),
       comboCount: document.getElementById('hud-combo-count'),
       comboMult: document.getElementById('hud-combo-mult'),
+      lives: document.getElementById('hud-lives'),
       banner: document.getElementById('banner'),
       startOverlay: document.getElementById('start-overlay'),
       btnStart: document.getElementById('btn-start'),
       btnMute: document.getElementById('btn-mute'),
+      gameoverOverlay: document.getElementById('gameover-overlay'),
+      gameoverStats: document.getElementById('gameover-stats'),
+      btnRestart: document.getElementById('btn-restart'),
     };
     this.bannerTimer = null;
   }
 
   onStart(callback) {
     this.el.btnStart.addEventListener('click', callback, { once: true });
+  }
+
+  onRestart(callback) {
+    this.el.btnRestart.addEventListener('click', callback);
   }
 
   onMute(callback) {
@@ -37,6 +45,8 @@ export class HudController {
   update(state) {
     this.el.score.textContent = state.score.toLocaleString('vi-VN');
     this.el.level.textContent = `Cấp ${state.level}`;
+    this.el.lives.textContent = `🧡 ${state.lives}`;
+    this.el.lives.classList.toggle('low', state.lives <= 10);
 
     // super weapon shows its countdown and a golden chip
     if (state.superTimeLeft > 0) {
@@ -63,6 +73,17 @@ export class HudController {
 
   showLevelUpBanner(level, weapon) {
     this.showBanner(`✨ Cấp ${level} — ${weapon.icon} ${weapon.name}!`);
+  }
+
+  showGameOver(state) {
+    this.el.gameoverStats.innerHTML =
+      `Điểm: <strong>${state.score.toLocaleString('vi-VN')}</strong>` +
+      ` · Cấp ${state.level} · Combo cao nhất ×${state.bestCombo}`;
+    this.el.gameoverOverlay.classList.remove('hidden');
+  }
+
+  hideGameOver() {
+    this.el.gameoverOverlay.classList.add('hidden');
   }
 
   showBanner(text) {

@@ -6,16 +6,24 @@ import { applySuperToTier, SUPER_DURATION } from '../config/super-weapons-config
 
 const COMBO_PER_MULT = 5; // every 5 combo → +1 multiplier
 const MAX_MULT = 5;
+const STARTING_LIVES = 50; // one life lost per escaped bug; 0 → game over
 
 export class GameState {
   constructor() {
+    this.resetRun();
+    this.phase = 'start'; // 'start' | 'playing' | 'gameover'
+  }
+
+  /** Fresh run: everything back to square one (used on start and restart). */
+  resetRun() {
     this.score = 0;
     this.combo = 0;
     this.bestCombo = 0;
     this.level = 1;
-    this.phase = 'start'; // 'start' | 'playing'
+    this.lives = STARTING_LIVES;
     this.superWeapon = null; // temporary weapon from a broken power-up orb
     this.superTimeLeft = 0;
+    this.phase = 'playing';
   }
 
   get multiplier() {
@@ -47,7 +55,7 @@ export class GameState {
   }
 
   start() {
-    this.phase = 'playing';
+    this.resetRun();
   }
 
   /**
@@ -66,10 +74,13 @@ export class GameState {
     return { gained, leveledUp, level: this.level };
   }
 
-  /** A bug escaped off screen — only penalty is losing the combo. */
+  /** A bug escaped off screen: combo resets and one life is lost. */
   registerEscape() {
     const hadCombo = this.combo > 0;
     this.combo = 0;
-    return { comboLost: hadCombo };
+    this.lives = Math.max(this.lives - 1, 0);
+    const gameOver = this.lives === 0;
+    if (gameOver) this.phase = 'gameover';
+    return { comboLost: hadCombo, lives: this.lives, gameOver };
   }
 }

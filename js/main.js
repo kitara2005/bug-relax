@@ -41,6 +41,7 @@ class Game {
     });
 
     this.hud.onStart(() => this.start());
+    this.hud.onRestart(() => this.restart());
     this.hud.onMute(() => this.audio.toggleMute());
 
     // pause simulation when the tab is hidden (rAF stops; clamp dt on return)
@@ -55,6 +56,26 @@ class Game {
     this.audio.unlock();
     this.state.start();
     this.hud.hideStartOverlay();
+    this.hud.update(this.state);
+    this.audio.setMusicForLevel(this.state.level);
+  }
+
+  /** Out of lives: play stops (update loop freezes), show the summary. */
+  endRun() {
+    this.audio.playGameOver();
+    this.hud.showGameOver(this.state);
+  }
+
+  /** "Chơi lại": wipe the field and begin a fresh run. */
+  restart() {
+    this.state.resetRun();
+    this.bugs = [];
+    this.spawner = new BugSpawner();
+    this.powerUps = new PowerUpManager();
+    this.particles = new ParticleSystem();
+    this.texts = new FloatingTextSystem();
+    this.lastSuperSec = 0;
+    this.hud.hideGameOver();
     this.hud.update(this.state);
     this.audio.setMusicForLevel(this.state.level);
   }
@@ -80,21 +101,23 @@ class Game {
     const newBug = this.spawner.update(dt * 1000, difficulty, this.state.level, this.bugs.length, bounds);
     if (newBug) this.bugs.push(newBug);
 
-    let comboLost = false;
+    let escapedAny = false;
+    let outOfLives = false;
     for (const bug of this.bugs) {
       bug.update(dt, difficulty.speedMult, bounds);
       if (bug.escaped) {
         bug.escaped = false; // handle once
-        const { comboLost: lost } = this.state.registerEscape();
-        comboLost = comboLost || lost;
+        escapedAny = true;
+        if (this.state.registerEscape().gameOver) outOfLives = true;
       }
     }
     this.bugs = this.bugs.filter((b) => b.state !== 'gone');
 
-    if (comboLost) {
+    if (escapedAny) {
       this.audio.playEscape();
       this.hud.update(this.state);
     }
+    if (outOfLives) this.endRun();
 
     this.particles.update(dt);
     this.texts.update(dt);

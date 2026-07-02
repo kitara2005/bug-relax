@@ -4,13 +4,15 @@
 
 ## Concept
 Relax web game. Night garden, glowing insects drift in, player taps/clicks to catch them.
-No lose state, no game over. Score, combo, gentle progression. Mobile + desktop.
+Each run starts with 50 lives; every escaped bug costs one. 0 lives → game over → replay.
+Score, combo, gentle progression. Mobile + desktop.
 
 ## Core Loop
 1. Bugs spawn gradually at random positions, hover with soft motion, glow pulsing.
 2. Player taps a bug → weapon deals damage. Bug dies → light burst + points.
-3. Bug left alone for its lifetime → flies off screen → combo resets (only penalty).
+3. Bug left alone for its lifetime → flies off screen → combo resets AND -1 life (of 50).
 4. Score thresholds → level up → stronger weapon, bugs get tankier + faster (slow ramp).
+5. Lives hit 0 → summary screen (score / level / best combo) → "Chơi lại" restarts fresh.
 
 ## Systems
 

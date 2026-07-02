@@ -11,9 +11,11 @@ python3 -m http.server 8080
 
 ## Gameplay
 - Bug xuất hiện từ từ ở vị trí ngẫu nhiên, lơ lửng vài giây rồi bay đi
+- Mỗi lượt có **50 mạng** — bug trốn thoát trừ 1 mạng + mất combo; hết mạng thì chơi lại
 - Tap/click để bắn — mỗi cấp mở **vũ khí mạnh và nhanh hơn** (8 tier)
-- Bắn trúng liên tiếp → **combo** nhân điểm (tối đa ×5); để bug bay mất → mất combo
-- Lên cấp: bug nhiều máu + nhanh hơn một chút — độ khó tăng rất từ từ
+- Bắn trúng liên tiếp → **combo** nhân điểm (tối đa ×5)
+- **Orb pha lê** thỉnh thoảng xuất hiện: bắn 2 phát vỡ → nhận súng đặc biệt 15 giây (dame ×3 / bắn lan / liên thanh)
+- Lên cấp: bug nhiều máu + nhanh + đông hơn — độ khó tăng từ từ
 - 6 loại bug: đom đóm, bướm đêm, chuồn chuồn, bọ cánh cứng, bọ rùa và bọ lồng đèn vàng hiếm (150 điểm)
 
 ## Công nghệ
