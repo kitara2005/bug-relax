@@ -75,18 +75,18 @@ Instrumental ambient electronica, gentle euphoric build, warm analog synth layer
 ```
 
 ## Checklist
-- [ ] background.png
-- [ ] bug-firefly.png
-- [ ] bug-moth.png
-- [ ] bug-dragonfly.png
-- [ ] bug-beetle.png
-- [ ] bug-ladybug.png
-- [ ] bug-lantern.png
-- [ ] track-1.mp3
-- [ ] track-2.mp3
-- [ ] track-3.mp3
-- [ ] track-4.mp3
-- [ ] track-5.mp3
+- [x] background.png
+- [x] bug-firefly.png
+- [x] bug-moth.png
+- [x] bug-dragonfly.png
+- [x] bug-beetle.png
+- [x] bug-ladybug.png
+- [x] bug-lantern.png
+- [x] track-1.mp3
+- [x] track-2.mp3
+- [x] track-3.mp3
+- [x] track-4.mp3
+- [x] track-5.mp3
 
 Thả file đúng tên vào đúng thư mục là xong — không cần sửa code.
 Ảnh bug nên là PNG vuông (1024×1024), nền trong suốt hoặc đen trơn.
