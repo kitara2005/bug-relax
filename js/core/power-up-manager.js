@@ -45,7 +45,7 @@ export class PowerUpManager {
     return { broken, superDef: orb.superDef, x: orb.x, y: orb.y, color: orb.superDef.color };
   }
 
-  draw(ctx, time) {
-    if (this.orb) this.orb.draw(ctx, time);
+  draw(ctx, time, assets = null) {
+    if (this.orb) this.orb.draw(ctx, time, assets?.superIcons[this.orb.superDef.id]);
   }
 }

@@ -30,13 +30,24 @@ Lifecycle: spawn (scale-in) → wander (sin wobble drift) → escape (accelerate
 HP gets small bonus at high levels. Hit shows flash + hp ring arc.
 
 ### Weapons (8 tiers, unlocked by level)
-Same tap mechanic; tiers differ in damage + cooldown + beam color. Names in Vietnamese
-(Đèn Pin Nhỏ → Vương Trượng Bình Minh). Damage 1→6, cooldown 400ms→160ms.
+Tap OR hold-to-sweep: holding the pointer auto-fires at its position at the weapon's
+cooldown rate (anti-fatigue — drag across bugs instead of tapping each one).
+Tiers differ in damage + cooldown + color; tiers 5-8 add built-in splash 40/50/60/70px.
+Damage 1→6, cooldown 400ms→160ms. Icons: assets/images/weapon-<tier>.png (emoji fallback).
 
 ### Combo & Score
 - Kill: combo +1. Multiplier = 1 + floor(combo/5), capped ×5.
-- Bug escapes: combo → 0. No score loss.
+- Every 15 combo → +1 life back (capped at 15) — comeback mechanic.
+- Bug escapes: combo → 0, -1 life. No score loss.
 - Points = base × multiplier, floating text shows gain.
+
+### Frenzy waves
+Every ~75-90s a swarm of 10 bonus fireflies drips in over ~2s (banner + chime announce it).
+They stay only 4.5-6.5s; killing scores normally, escaping costs NOTHING — pure reward pacing.
+
+### UI language
+International: icons + numbers only (Lv N, 🧡 N, 🔥 N ×M, weapon icon). Title "Firefly Night".
+No Vietnamese/English words in gameplay UI.
 
 ### Levels & Difficulty
 - Thresholds: 0, 250, 650, 1250, 2100, 3250, 4750, 6650, 9000, then +2600/level.

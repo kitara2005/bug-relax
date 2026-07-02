@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#070b1e" />
-  <title>Đêm Đom Đóm — game relax bắt bug</title>
+  <title>Firefly Night</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌙</text></svg>" />
 </head>
@@ -15,35 +15,35 @@
   <div id="hud" class="hud hidden">
     <div class="hud-left">
       <div id="hud-score" class="hud-score">0</div>
-      <div id="hud-level" class="hud-level">Cấp 1</div>
+      <div id="hud-level" class="hud-level">Lv 1</div>
       <div id="hud-lives" class="hud-lives">🧡 15</div>
     </div>
     <div class="hud-center">
       <div id="hud-combo" class="hud-combo hidden">
-        <span id="hud-combo-count">0</span> combo · <span id="hud-combo-mult">×1</span>
+        🔥 <span id="hud-combo-count">0</span> · <span id="hud-combo-mult">×1</span>
       </div>
     </div>
     <div class="hud-right">
-      <div id="hud-weapon" class="hud-weapon">🔦 Đèn Pin Nhỏ</div>
-      <button id="btn-mute" class="btn-mute" aria-label="Bật/tắt âm thanh">🔊</button>
+      <div id="hud-weapon" class="hud-weapon">🔦</div>
+      <button id="btn-mute" class="btn-mute" aria-label="Toggle sound">🔊</button>
     </div>
   </div>
 
   <!-- Level-up banner -->
   <div id="banner" class="banner hidden"></div>
 
-  <!-- Start screen -->
+  <!-- Start screen: icon-only rules — tap bug = points, escaped bug = -1 life -->
   <div id="start-overlay" class="start-overlay">
-    <h1 class="start-title">🌙 Đêm Đom Đóm</h1>
-    <p class="start-subtitle">Khu vườn đêm đầy côn trùng phát sáng.<br />Chạm vào chúng để thu thập ánh sáng.<br />Bạn có 15 mạng — đừng để bug trốn thoát nhé!</p>
-    <button id="btn-start" class="btn-start">Chạm để bắt đầu ✨</button>
+    <h1 class="start-title">🌙 Firefly Night</h1>
+    <p class="start-subtitle">👆 🐛 = ⭐&ensp;·&ensp;💨 🐛 = −1 🧡<br />🧡 × 15</p>
+    <button id="btn-start" class="btn-start">▶</button>
   </div>
 
   <!-- Game over screen -->
   <div id="gameover-overlay" class="start-overlay hidden">
-    <h1 class="start-title">🌙 Hết mạng rồi!</h1>
+    <h1 class="start-title">🌙 💤</h1>
     <p id="gameover-stats" class="start-subtitle"></p>
-    <button id="btn-restart" class="btn-start">Chơi lại 🔄</button>
+    <button id="btn-restart" class="btn-start">🔄</button>
   </div>
 
   <script type="module" src="js/main.js"></script>

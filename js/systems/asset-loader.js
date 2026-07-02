@@ -2,6 +2,8 @@
 // every image that fails to load simply stays procedural.
 
 import { BUG_TYPES } from '../config/bug-types-config.js';
+import { WEAPONS } from '../config/weapons-config.js';
+import { SUPER_WEAPONS } from '../config/super-weapons-config.js';
 
 const IMAGE_DIR = 'assets/images/';
 
@@ -31,18 +33,29 @@ function prescaleSprite(img, displaySize) {
 export class AssetLoader {
   constructor() {
     this.background = null;      // HTMLImageElement | null
-    this.bugSprites = {};        // typeId → HTMLImageElement | null
+    this.bugSprites = {};        // typeId → canvas | null
+    this.weaponIcons = {};       // tier (1-8) → HTMLImageElement | null
+    this.superIcons = {};        // super id → HTMLImageElement | null
   }
 
   async load() {
     const bugIds = Object.keys(BUG_TYPES);
-    const [background, ...sprites] = await Promise.all([
+    const superIds = SUPER_WEAPONS.map((s) => s.id);
+    const [background, bugs, weapons, supers] = await Promise.all([
       tryLoadImage(`${IMAGE_DIR}background.png`),
-      ...bugIds.map((id) => tryLoadImage(`${IMAGE_DIR}bug-${id}.png`)),
+      Promise.all(bugIds.map((id) => tryLoadImage(`${IMAGE_DIR}bug-${id}.png`))),
+      Promise.all(WEAPONS.map((w) => tryLoadImage(`${IMAGE_DIR}weapon-${w.tier}.png`))),
+      Promise.all(superIds.map((id) => tryLoadImage(`${IMAGE_DIR}super-${id}.png`))),
     ]);
     this.background = background;
     bugIds.forEach((id, i) => {
-      this.bugSprites[id] = prescaleSprite(sprites[i], BUG_TYPES[id].size);
+      this.bugSprites[id] = prescaleSprite(bugs[i], BUG_TYPES[id].size);
+    });
+    WEAPONS.forEach((w, i) => {
+      this.weaponIcons[w.tier] = weapons[i];
+    });
+    superIds.forEach((id, i) => {
+      this.superIcons[id] = supers[i];
     });
     return this;
   }

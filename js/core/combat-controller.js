@@ -54,6 +54,12 @@ function handleKill(game, target) {
   );
   game.audio.playKill();
 
+  // combo milestone paid out a life
+  if (result.lifeGained) {
+    game.texts.add('+1 🧡', target.x, target.y - target.type.size, '#8dffb0', 20);
+    game.audio.playPowerUp();
+  }
+
   if (result.leveledUp) {
     game.hud.showLevelUpBanner(result.level, game.state.weapon);
     game.particles.spawnLevelConfetti(game.renderer.w, game.state.weapon.color);
@@ -69,6 +75,6 @@ function claimSuperWeapon(game, { superDef, x, y, color }) {
   game.lastSuperSec = 0;
   game.particles.spawnKillBurst(x, y, color, 76);
   game.audio.playPowerUp();
-  game.hud.showBanner(`${superDef.icon} ${superDef.name} — 15 giây!`);
+  game.hud.showBanner(`${superDef.icon} 15s`);
   game.hud.update(game.state);
 }

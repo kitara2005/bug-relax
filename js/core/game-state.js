@@ -7,6 +7,7 @@ import { applySuperToTier, SUPER_DURATION } from '../config/super-weapons-config
 const COMBO_PER_MULT = 5; // every 5 combo → +1 multiplier
 const MAX_MULT = 5;
 const STARTING_LIVES = 15; // one life lost per escaped bug; 0 → game over
+const COMBO_PER_LIFE = 15; // every 15 combo → +1 life back (capped at start value)
 
 export class GameState {
   constructor() {
@@ -67,11 +68,18 @@ export class GameState {
     this.combo += 1;
     this.bestCombo = Math.max(this.bestCombo, this.combo);
 
+    // combo milestone gives a life back — comeback mechanic, makes combo matter
+    let lifeGained = false;
+    if (this.combo % COMBO_PER_LIFE === 0 && this.lives < STARTING_LIVES) {
+      this.lives += 1;
+      lifeGained = true;
+    }
+
     const newLevel = levelForScore(this.score);
     const leveledUp = newLevel > this.level;
     this.level = newLevel;
 
-    return { gained, leveledUp, level: this.level };
+    return { gained, leveledUp, level: this.level, lifeGained };
   }
 
   /** A bug escaped off screen: combo resets and one life is lost. */

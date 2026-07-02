@@ -1,7 +1,10 @@
 // DOM HUD: score / level / weapon / combo, level-up banner, start overlay, mute.
+// International UI: icons + numbers only, no words. Weapon/super icons use
+// image assets when present (assets/images/weapon-N.png, super-<id>.png).
 
 export class HudController {
-  constructor() {
+  constructor(assets = null) {
+    this.assets = assets;
     this.el = {
       hud: document.getElementById('hud'),
       score: document.getElementById('hud-score'),
@@ -42,19 +45,27 @@ export class HudController {
     this.el.hud.classList.remove('hidden');
   }
 
+  /** Weapon icon: image asset when available, emoji fallback. */
+  weaponIconHTML(weapon) {
+    const img = weapon.isSuper
+      ? this.assets?.superIcons[weapon.superId]
+      : this.assets?.weaponIcons[weapon.tier];
+    return img ? `<img class="weapon-icon" src="${img.src}" alt="" />` : weapon.icon;
+  }
+
   update(state) {
-    this.el.score.textContent = state.score.toLocaleString('vi-VN');
-    this.el.level.textContent = `Cấp ${state.level}`;
+    this.el.score.textContent = state.score.toLocaleString('en-US');
+    this.el.level.textContent = `Lv ${state.level}`;
     this.el.lives.textContent = `🧡 ${state.lives}`;
     this.el.lives.classList.toggle('low', state.lives <= 5);
 
     // super weapon shows its countdown and a golden chip
     if (state.superTimeLeft > 0) {
-      this.el.weapon.textContent =
-        `${state.weapon.icon} ${state.weapon.name} · ${Math.ceil(state.superTimeLeft)}s`;
+      this.el.weapon.innerHTML =
+        `${this.weaponIconHTML(state.weapon)} ${Math.ceil(state.superTimeLeft)}s`;
       this.el.weapon.classList.add('super');
     } else {
-      this.el.weapon.textContent = `${state.weapon.icon} ${state.weapon.name}`;
+      this.el.weapon.innerHTML = this.weaponIconHTML(state.weapon);
       this.el.weapon.classList.remove('super');
     }
 
@@ -72,13 +83,13 @@ export class HudController {
   }
 
   showLevelUpBanner(level, weapon) {
-    this.showBanner(`✨ Cấp ${level} — ${weapon.icon} ${weapon.name}!`);
+    this.showBanner(`⭐ Lv ${level} · ${weapon.icon}`);
   }
 
   showGameOver(state) {
     this.el.gameoverStats.innerHTML =
-      `Điểm: <strong>${state.score.toLocaleString('vi-VN')}</strong>` +
-      ` · Cấp ${state.level} · Combo cao nhất ×${state.bestCombo}`;
+      `⭐ <strong>${state.score.toLocaleString('en-US')}</strong>` +
+      ` · Lv ${state.level} · 🔥 ×${state.bestCombo}`;
     this.el.gameoverOverlay.classList.remove('hidden');
   }
 

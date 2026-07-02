@@ -43,6 +43,7 @@ export function applySuperToTier(superDef, tierWeapon) {
     icon: superDef.icon,
     color: superDef.color,
     isSuper: true,
+    superId: superDef.id, // for icon asset lookup (assets/images/super-<id>.png)
   };
   if (superDef.mode === 'damage') weapon.damage = tierWeapon.damage * superDef.damageMult;
   if (superDef.mode === 'rapid') weapon.cooldown = superDef.cooldown;

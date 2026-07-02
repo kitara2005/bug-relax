@@ -6,6 +6,7 @@ import { drawBug } from './render/procedural-bug-painter.js';
 import { GameState } from './core/game-state.js';
 import { BugSpawner } from './core/bug-spawner.js';
 import { PowerUpManager } from './core/power-up-manager.js';
+import { FrenzySpawner } from './core/frenzy-spawner.js';
 import { shoot } from './core/combat-controller.js';
 import { ParticleSystem } from './entities/particle-system.js';
 import { FloatingTextSystem } from './entities/floating-text.js';
@@ -22,11 +23,12 @@ class Game {
     this.state = new GameState();
     this.spawner = new BugSpawner();
     this.powerUps = new PowerUpManager();
+    this.frenzy = new FrenzySpawner();
     this.lastSuperSec = 0; // last countdown second shown on the HUD
     this.particles = new ParticleSystem();
     this.texts = new FloatingTextSystem();
     this.audio = new AudioManager();
-    this.hud = new HudController();
+    this.hud = new HudController(assets);
 
     this.bugs = [];
     this.lastShotAt = 0;
@@ -72,6 +74,7 @@ class Game {
     this.bugs = [];
     this.spawner = new BugSpawner();
     this.powerUps = new PowerUpManager();
+    this.frenzy = new FrenzySpawner();
     this.particles = new ParticleSystem();
     this.texts = new FloatingTextSystem();
     this.lastSuperSec = 0;
@@ -96,10 +99,21 @@ class Game {
       }
     }
 
+    // hold-to-sweep: keep firing at the held pointer (cooldown gates the rate)
+    if (this.input.down && this.input.x != null) shoot(this, this.input.x, this.input.y);
+
     this.powerUps.update(dt, this.state.level, bounds);
 
     const newBug = this.spawner.update(dt * 1000, difficulty, this.state.level, this.bugs.length, bounds);
     if (newBug) this.bugs.push(newBug);
+
+    // frenzy wave: bonus fireflies, free to miss
+    const bonusBug = this.frenzy.update(dt, bounds);
+    if (bonusBug) this.bugs.push(bonusBug);
+    if (this.frenzy.consumeWaveStart()) {
+      this.hud.showBanner('✨ 🐛🐛🐛 ✨');
+      this.audio.playPowerUp();
+    }
 
     let escapedAny = false;
     let outOfLives = false;
@@ -107,6 +121,7 @@ class Game {
       bug.update(dt, difficulty.speedMult, bounds);
       if (bug.escaped) {
         bug.escaped = false; // handle once
+        if (bug.isBonus) continue; // frenzy bugs escape for free
         escapedAny = true;
         // show the life loss where the bug left (clamped back into view)
         const tx = Math.min(Math.max(bug.x, 40), bounds.w - 40);
@@ -136,7 +151,7 @@ class Game {
       drawBug(ctx, bug, this.elapsed, this.assets.bugSprites[bug.type.id]);
     }
 
-    this.powerUps.draw(ctx, this.elapsed);
+    this.powerUps.draw(ctx, this.elapsed, this.assets);
     this.particles.draw(ctx);
     this.texts.draw(ctx);
 

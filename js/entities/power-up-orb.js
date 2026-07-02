@@ -48,7 +48,7 @@ export class PowerUpOrb {
     return dx * dx + dy * dy <= this.hitRadius * this.hitRadius;
   }
 
-  draw(ctx, time) {
+  draw(ctx, time, iconSprite = null) {
     const t = time + this.phase;
     const y = this.y + Math.sin(t * 1.6) * 7;
     // fade in on spawn, fade out near despawn
@@ -82,11 +82,15 @@ export class PowerUpOrb {
     ctx.stroke();
     ctx.restore();
 
-    // the weapon icon floating inside
-    ctx.font = '22px serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(this.superDef.icon, 0, 1);
+    // the weapon icon floating inside — image asset when available
+    if (iconSprite) {
+      ctx.drawImage(iconSprite, -17, -17, 34, 34);
+    } else {
+      ctx.font = '22px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(this.superDef.icon, 0, 1);
+    }
 
     // crack hint after first hit
     if (this.hp < ORB_HP) {

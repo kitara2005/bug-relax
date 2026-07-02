@@ -74,6 +74,37 @@ Instrumental melodic chillwave, hypnotic plucked synth arpeggios, smooth deep ba
 Instrumental ambient electronica, gentle euphoric build, warm analog synth layers, soft four-on-the-floor kick, sparkling bell melodies, 95 bpm, dancing lights in the night sky, joyful serenity, never aggressive, silky smooth
 ```
 
+## Icon vũ khí (11 ảnh → `assets/images/`)
+
+Icon hiện trên HUD, trong orb pha lê và banner. PNG vuông 512×512, nền trong suốt.
+**Tạo cùng một cuộc hội thoại** để đồng bộ style. Chưa có ảnh nào thì game dùng emoji.
+
+Dòng style chung cho icon đầu tiên (các icon sau thêm "Same art style as the previous image"):
+
+> Glossy game UI icon, cute magical night theme, soft bioluminescent glow, smooth digital art,
+> centered, isolated on transparent background, PNG, no text, square composition.
+
+### 8 vũ khí theo cấp (`weapon-1.png` → `weapon-8.png`)
+
+| File | Prompt (thêm style chung ở trên) |
+|---|---|
+| `weapon-1.png` | A tiny cute flashlight torch glowing warm yellow, small and humble starter weapon |
+| `weapon-2.png` | A glowing mint-green energy racket like a small magical bug net, light and playful |
+| `weapon-3.png` | A small blue blaster gun shaped like a shooting star, leaving a sparkling trail |
+| `weapon-4.png` | An elegant crescent moon bow with a lavender glowing string, dreamy and graceful |
+| `weapon-5.png` | A sleek teal laser pistol with aurora light ribbons flowing from its barrel |
+| `weapon-6.png` | A chunky rounded pink cannon charged with swirling nebula energy inside a glass chamber |
+| `weapon-7.png` | A floating violet crystal prism weapon refracting galaxy light beams |
+| `weapon-8.png` | A majestic golden royal scepter crowned with a radiant dawn sun gem, ultimate weapon |
+
+### 3 súng đặc biệt từ orb (`super-storm.png`, `super-nova.png`, `super-zephyr.png`)
+
+| File | Prompt (thêm style chung ở trên) |
+|---|---|
+| `super-storm.png` | A powerful golden lightning bolt crackling with starlight energy, framed by a small crystal diamond shape |
+| `super-nova.png` | A pink firework starburst exploding with colorful sparkles, framed by a small crystal diamond shape |
+| `super-zephyr.png` | A swirling turquoise cyclone of wind and light moving at high speed, framed by a small crystal diamond shape |
+
 ## Checklist
 - [x] background.png
 - [x] bug-firefly.png
@@ -87,6 +118,8 @@ Instrumental ambient electronica, gentle euphoric build, warm analog synth layer
 - [x] track-3.mp3
 - [x] track-4.mp3
 - [x] track-5.mp3
+- [ ] weapon-1.png … weapon-8.png (8 icon vũ khí)
+- [ ] super-storm.png, super-nova.png, super-zephyr.png (3 icon súng đặc biệt)
 
 Thả file đúng tên vào đúng thư mục là xong — không cần sửa code.
 Ảnh bug nên là PNG vuông (1024×1024), nền trong suốt hoặc đen trơn.
