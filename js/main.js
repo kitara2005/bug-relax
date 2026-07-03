@@ -64,6 +64,8 @@ class Game {
     this.hud.update(this.state);
     if (mode === 'relax') this.audio.startRelaxPlaylist(); // continuous listening
     else this.audio.setMusicForLevel(this.state.level);
+    // rain on by default — this start click is a valid gesture to begin audio
+    if (!this.audio.rainOn) this.hud.setRainButton(this.audio.toggleRain());
   }
 
   /** Out of lives: play stops (update loop freezes), show the summary. */

@@ -45,8 +45,13 @@ export class HudController {
   onRain(callback) {
     this.el.btnRain.addEventListener('click', () => {
       const on = callback();
-      this.el.btnRain.classList.toggle('btn-off', !on);
+      this.setRainButton(on);
     });
+  }
+
+  /** Reflect rain on/off state on the button (dim when off). */
+  setRainButton(on) {
+    this.el.btnRain.classList.toggle('btn-off', !on);
   }
 
   onRestart(callback) {
