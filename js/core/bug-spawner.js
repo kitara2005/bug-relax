@@ -20,7 +20,7 @@ export class BugSpawner {
    * @param {number} activeBugs bugs currently on screen
    * @param {{w:number, h:number}} bounds canvas size in CSS px
    */
-  update(dtMs, difficulty, level, activeBugs, bounds) {
+  update(dtMs, difficulty, level, activeBugs, bounds, unlockAllTypes = false) {
     this.timerMs -= dtMs;
     if (this.timerMs > 0) return null;
 
@@ -30,7 +30,7 @@ export class BugSpawner {
 
     if (activeBugs >= difficulty.maxBugs) return null;
 
-    const type = pickBugType(level);
+    const type = pickBugType(level, Math.random, unlockAllTypes);
     const mx = bounds.w * EDGE_MARGIN + type.size / 2;
     const myTop = Math.max(bounds.h * EDGE_MARGIN, HUD_SAFE_TOP) + type.size / 2;
     const myBottom = bounds.h * (1 - EDGE_MARGIN) - type.size / 2;

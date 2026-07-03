@@ -88,13 +88,16 @@ export const BUG_TYPES = {
   },
 };
 
-/** Weighted-random pick of a bug type available at the given level. */
-export function pickBugType(level, rng = Math.random) {
-  const available = Object.values(BUG_TYPES).filter((t) => level >= t.minLevel);
-  const total = available.reduce((sum, t) => sum + t.weight(level), 0);
+/** Weighted-random pick of a bug type available at the given level.
+ *  unlockAll (relax mode): every type can appear regardless of level, weighted
+ *  as if mid-game so all 6 kinds show up in a pleasant balanced mix. */
+export function pickBugType(level, rng = Math.random, unlockAll = false) {
+  const available = Object.values(BUG_TYPES).filter((t) => unlockAll || level >= t.minLevel);
+  const weightLevel = unlockAll ? Math.max(level, 5) : level;
+  const total = available.reduce((sum, t) => sum + t.weight(weightLevel), 0);
   let roll = rng() * total;
   for (const type of available) {
-    roll -= type.weight(level);
+    roll -= type.weight(weightLevel);
     if (roll <= 0) return type;
   }
   return available[available.length - 1];

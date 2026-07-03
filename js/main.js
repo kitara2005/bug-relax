@@ -108,7 +108,7 @@ class Game {
 
     this.powerUps.update(dt, this.state.level, bounds);
 
-    const newBug = this.spawner.update(dt * 1000, difficulty, this.state.level, this.bugs.length, bounds);
+    const newBug = this.spawner.update(dt * 1000, difficulty, this.state.level, this.bugs.length, bounds, this.state.isRelax);
     if (newBug) this.bugs.push(newBug);
 
     // frenzy wave: bonus fireflies, free to miss
