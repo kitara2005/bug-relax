@@ -6,7 +6,7 @@ import { musicTrackForLevel } from '../config/levels-config.js';
 const TRACK_COUNT = 5;
 const MUSIC_VOLUME = 0.45;
 const FADE_STEP = 0.03; // per 60ms tick → ~1s crossfade
-const RAIN_VOLUME = 0.13; // gentle rain layer, sits under the music
+const RAIN_VOLUME = 0.35; // rain layer volume (sits alongside the music)
 
 export class AudioManager {
   constructor() {
