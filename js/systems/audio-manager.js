@@ -16,9 +16,11 @@ export class AudioManager {
     this.currentTrack = -1;
     this.fadeInterval = null; // active crossfade timer (only one at a time)
     this.relaxPlaylist = false; // relax mode chains all tracks continuously
-    this.rainOn = false;      // gentle rain ambience toggle
-    this.rainNodes = null;    // active rain audio graph
+    this.rainOn = false;       // gentle rain ambience toggle
+    this.rain = null;          // rain audio element (assets/audio/rain.mp3)
+    this.rainAvailable = true; // false if the file is missing
     this.prepareTracks();
+    this.prepareRain();
   }
 
   prepareTracks() {
@@ -83,68 +85,33 @@ export class AudioManager {
     const current = this.tracks[this.currentTrack];
     if (current) current.volume = this.muted ? 0 : MUSIC_VOLUME;
     // rain follows mute too
-    if (this.rainNodes) this.rainNodes.master.gain.value = this.muted ? 0 : 1;
+    if (this.rain && this.rainOn) this.rain.volume = this.muted ? 0 : RAIN_VOLUME;
     return this.muted;
   }
 
-  /** Toggle a gentle procedural rain layer (filtered looping noise). */
+  /** Gentle night-rain loop from assets/audio/rain.mp3 (silent if missing). */
+  prepareRain() {
+    const audio = new Audio('assets/audio/rain.mp3');
+    audio.loop = true;
+    audio.volume = 0;
+    audio.preload = 'auto';
+    audio.addEventListener('error', () => { this.rainAvailable = false; });
+    this.rain = audio;
+  }
+
+  /** Toggle the rain layer. Returns whether it's now on. */
   toggleRain() {
     this.unlock();
-    if (!this.ctx) return false;
+    if (!this.rain || !this.rainAvailable) return false;
     if (this.rainOn) {
-      this.stopRain();
+      this.rain.pause();
+      this.rainOn = false;
     } else {
-      this.startRain();
+      this.rain.volume = this.muted ? 0 : RAIN_VOLUME;
+      this.rain.play().catch(() => {});
+      this.rainOn = true;
     }
     return this.rainOn;
-  }
-
-  startRain() {
-    const ctx = this.ctx;
-    // ~2s of white noise, looped — the raw "hiss"
-    const buffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
-
-    const src = ctx.createBufferSource();
-    src.buffer = buffer;
-    src.loop = true;
-
-    // shape the noise into soft rain: cut rumble + tame the harsh highs
-    const hp = ctx.createBiquadFilter();
-    hp.type = 'highpass';
-    hp.frequency.value = 400;
-    const lp = ctx.createBiquadFilter();
-    lp.type = 'lowpass';
-    lp.frequency.value = 1500;
-
-    // inner gain modulated slowly so intensity gently swells like real rain
-    const inner = ctx.createGain();
-    inner.gain.value = RAIN_VOLUME;
-    const lfo = ctx.createOscillator();
-    lfo.frequency.value = 0.08;
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = RAIN_VOLUME * 0.3;
-    lfo.connect(lfoGain).connect(inner.gain);
-
-    // master gain: mute control point
-    const master = ctx.createGain();
-    master.gain.value = this.muted ? 0 : 1;
-
-    src.connect(hp).connect(lp).connect(inner).connect(master).connect(ctx.destination);
-    src.start();
-    lfo.start();
-
-    this.rainNodes = { src, lfo, master };
-    this.rainOn = true;
-  }
-
-  stopRain() {
-    if (this.rainNodes) {
-      try { this.rainNodes.src.stop(); this.rainNodes.lfo.stop(); } catch { /* already stopped */ }
-      this.rainNodes = null;
-    }
-    this.rainOn = false;
   }
 
   /** Switch music to the track mapped to this level, crossfading. */

@@ -29,8 +29,15 @@ Game **chơi được ngay không cần asset** — mọi hình ảnh/hiệu ứ
 | `assets/images/background.png` | nền vườn đêm (16:9) |
 | `assets/images/bug-firefly.png` … `bug-moth / bug-dragonfly / bug-beetle / bug-ladybug / bug-lantern.png` | sprite bug, PNG nền trong suốt, vuông |
 | `assets/music/track-1.mp3` … `track-5.mp3` | nhạc nền theo cấp (1-2→t1, 3-4→t2, 5-6→t3, 7-8→t4, 9+→t5) |
+| `assets/audio/rain.mp3` | tiếng mưa nền (nút 🌧 bật/tắt); thiếu file thì nút vô hiệu |
 
 File nào có thì game tự dùng, thiếu thì tự fallback — không cần sửa code.
+**Đổi tiếng mưa:** tải file mưa bất kỳ (vd Pixabay), đổi tên thành `rain.mp3`, thả vào `assets/audio/`.
+
+## Credits
+- Tiếng mưa `assets/audio/rain.mp3`: "Sound of light rainfall" — tác giả *Mijesty*,
+  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sound_of_light_rainfall.ogg),
+  giấy phép [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) (chuyển sang mp3).
 
 ## Cấu trúc
 ```
