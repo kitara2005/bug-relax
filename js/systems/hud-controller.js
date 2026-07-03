@@ -23,6 +23,7 @@ export class HudController {
       btnRestart: document.getElementById('btn-restart'),
       btnRelax: document.getElementById('btn-relax'),
       btnHome: document.getElementById('btn-home'),
+      btnRain: document.getElementById('btn-rain'),
     };
     this.bannerTimer = null;
   }
@@ -39,6 +40,13 @@ export class HudController {
 
   onHome(callback) {
     this.el.btnHome.addEventListener('click', callback);
+  }
+
+  onRain(callback) {
+    this.el.btnRain.addEventListener('click', () => {
+      const on = callback();
+      this.el.btnRain.classList.toggle('btn-off', !on);
+    });
   }
 
   onRestart(callback) {

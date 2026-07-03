@@ -138,6 +138,10 @@ html, body {
 
 .btn-mute:active { transform: scale(0.92); }
 
+/* toggle button in its "off" state reads dimmer */
+.btn-mute.btn-off { opacity: 0.45; }
+.btn-mute:not(.btn-off) { opacity: 1; }
+
 /* ---------- Level-up banner ---------- */
 .banner {
   position: fixed;

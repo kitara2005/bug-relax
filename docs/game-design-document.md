@@ -82,6 +82,8 @@ No Vietnamese/English words in gameplay UI.
 - **Music:** 5 Suno tracks (user-provided) `assets/music/track-1..5.mp3`.
   Level mapping: 1-2→t1, 3-4→t2, 5-6→t3, 7-8→t4, 9+→t5. Crossfade on change. Silent if missing.
 - **SFX:** procedural WebAudio (shoot pluck, hit tick, kill chime, level-up arpeggio, soft escape tone).
+- **Rain (🌧 toggle):** procedural gentle rain — looping white noise through highpass(400)+lowpass(1500)
+  with a slow LFO on gain for natural swell. Layers under the music, follows mute. No file.
 - Mute button. Audio starts on first user gesture (autoplay policy).
 
 ## Tech

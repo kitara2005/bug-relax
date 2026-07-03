@@ -47,6 +47,7 @@ class Game {
     this.hud.onRestart(() => this.restart());
     this.hud.onHome(() => this.returnToMenu());
     this.hud.onMute(() => this.audio.toggleMute());
+    this.hud.onRain(() => this.audio.toggleRain());
 
     // pause simulation when the tab is hidden (rAF stops; clamp dt on return)
     document.addEventListener('visibilitychange', () => {
