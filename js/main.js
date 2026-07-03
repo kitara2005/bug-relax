@@ -42,7 +42,8 @@ class Game {
       onShoot: (x, y) => shoot(this, x, y),
     });
 
-    this.hud.onStart(() => this.start());
+    this.hud.onStart(() => this.start('game'));
+    this.hud.onRelax(() => this.start('relax'));
     this.hud.onRestart(() => this.restart());
     this.hud.onMute(() => this.audio.toggleMute());
 
@@ -54,12 +55,13 @@ class Game {
     requestAnimationFrame((t) => this.frame(t));
   }
 
-  start() {
+  start(mode = 'game') {
     this.audio.unlock();
-    this.state.start();
+    this.state.start(mode);
     this.hud.hideStartOverlay();
     this.hud.update(this.state);
-    this.audio.setMusicForLevel(this.state.level);
+    if (mode === 'relax') this.audio.startRelaxPlaylist(); // continuous listening
+    else this.audio.setMusicForLevel(this.state.level);
   }
 
   /** Out of lives: play stops (update loop freezes), show the summary. */
@@ -124,6 +126,7 @@ class Game {
       if (bug.escaped) {
         bug.escaped = false; // handle once
         if (bug.isBonus) continue;         // frenzy bugs escape for free
+        if (this.state.isRelax) continue;  // relax: bugs just drift away, no penalty
         if (this.state.phase === 'gameover') continue; // already dead, don't over-count
         escapedAny = true;
         // show the life loss where the bug left (clamped back into view)

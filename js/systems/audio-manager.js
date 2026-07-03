@@ -14,6 +14,7 @@ export class AudioManager {
     this.tracks = [];         // HTMLAudioElement | null per track
     this.currentTrack = -1;
     this.fadeInterval = null; // active crossfade timer (only one at a time)
+    this.relaxPlaylist = false; // relax mode chains all tracks continuously
     this.prepareTracks();
   }
 
@@ -28,6 +29,32 @@ export class AudioManager {
       audio.addEventListener('error', () => {
         this.tracks[slot] = null; // file missing → stay silent
       });
+      // relax playlist: when a track finishes, roll to the next available one
+      audio.addEventListener('ended', () => {
+        if (this.relaxPlaylist) this.playRelaxFrom(slot + 1);
+      });
+    }
+  }
+
+  /** Relax mode: play all tracks back-to-back on a loop for continuous listening. */
+  startRelaxPlaylist() {
+    this.relaxPlaylist = true;
+    this.tracks.forEach((t) => { if (t) t.loop = false; }); // chain, don't loop one
+    this.playRelaxFrom(0);
+  }
+
+  /** Play the first available track at/after startIdx, wrapping around. */
+  playRelaxFrom(startIdx) {
+    for (let k = 0; k < TRACK_COUNT; k++) {
+      const idx = (startIdx + k) % TRACK_COUNT;
+      const t = this.tracks[idx];
+      if (t) {
+        this.currentTrack = idx;
+        t.currentTime = 0;
+        t.volume = this.muted ? 0 : MUSIC_VOLUME;
+        t.play().catch(() => {});
+        return;
+      }
     }
   }
 

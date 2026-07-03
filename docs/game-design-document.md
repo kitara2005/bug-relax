@@ -4,8 +4,15 @@
 
 ## Concept
 Relax web game. Night garden, glowing insects drift in, player taps/clicks to catch them.
-Each run starts with 15 lives; every escaped bug costs one. 0 lives → game over → replay.
-Score, combo, gentle progression. Mobile + desktop.
+Two modes chosen on the start screen. Score, combo, gentle progression. Mobile + desktop.
+
+## Modes (start screen: ▶🎯 vs ∞🍃)
+- **Game** (default): 15 lives, each escaped bug costs one, 0 → game over → replay.
+  Music follows level tier.
+- **Relax**: endless, no lives, no game over. Escaped bugs just drift away (no penalty,
+  no text). Tapping still pops bugs for those who want it, but the point is watching the
+  fireflies float and listening — the 5 Suno tracks chain back-to-back on a continuous
+  loop (not level-gated). Lives chip hidden. Powerups/frenzy still play for visual interest.
 
 ## Core Loop
 1. Bugs spawn gradually at random positions, hover with soft motion, glow pulsing.

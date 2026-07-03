@@ -11,12 +11,18 @@ const COMBO_PER_LIFE = 15; // every 15 combo → +1 life back (capped at start v
 
 export class GameState {
   constructor() {
+    this.mode = 'game'; // 'game' (lives, can lose) | 'relax' (endless, no loss)
     this.resetRun();
     this.phase = 'start'; // 'start' | 'playing' | 'gameover'
   }
 
+  get isRelax() {
+    return this.mode === 'relax';
+  }
+
   /** Fresh run: everything back to square one (used on start and restart). */
-  resetRun() {
+  resetRun(mode = this.mode) {
+    this.mode = mode;
     this.score = 0;
     this.combo = 0;
     this.bestCombo = 0;
@@ -55,8 +61,8 @@ export class GameState {
     return difficultyForLevel(this.level);
   }
 
-  start() {
-    this.resetRun();
+  start(mode = 'game') {
+    this.resetRun(mode);
   }
 
   /**
@@ -82,8 +88,10 @@ export class GameState {
     return { gained, leveledUp, level: this.level, lifeGained };
   }
 
-  /** A bug escaped off screen: combo resets and one life is lost. */
+  /** A bug escaped off screen: combo resets and one life is lost.
+   *  Relax mode: no penalty at all — bugs just drift away. */
   registerEscape() {
+    if (this.isRelax) return { comboLost: false, lives: this.lives, gameOver: false };
     const hadCombo = this.combo > 0;
     this.combo = 0;
     this.lives = Math.max(this.lives - 1, 0);

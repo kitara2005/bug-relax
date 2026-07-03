@@ -32,11 +32,20 @@
   <!-- Level-up banner -->
   <div id="banner" class="banner hidden"></div>
 
-  <!-- Start screen: icon-only rules — tap bug = points, escaped bug = -1 life -->
+  <!-- Start screen: pick a mode. ▶🎯 = challenge (15 lives), ∞🍃 = relax (endless) -->
   <div id="start-overlay" class="start-overlay">
     <h1 class="start-title">🌙 Firefly Night</h1>
-    <p class="start-subtitle">👆 🐛 = ⭐&ensp;·&ensp;💨 🐛 = −1 🧡<br />🧡 × 15</p>
-    <button id="btn-start" class="btn-start">▶</button>
+    <p class="start-subtitle">👆 🐛 = ⭐&ensp;·&ensp;💨 🐛 = −1 🧡</p>
+    <div class="mode-row">
+      <button id="btn-start" class="btn-start mode-btn">
+        <span class="mode-icon">▶ 🎯</span>
+        <span class="mode-sub">🧡 × 15</span>
+      </button>
+      <button id="btn-relax" class="btn-start mode-btn mode-relax">
+        <span class="mode-icon">∞ 🍃</span>
+        <span class="mode-sub">🎧 🐛</span>
+      </button>
+    </div>
   </div>
 
   <!-- Game over screen -->

@@ -65,7 +65,8 @@ function handleKill(game, target) {
     game.hud.showLevelUpBanner(result.level, game.state.weapon);
     game.particles.spawnLevelConfetti(game.renderer.w, game.state.weapon.color);
     game.audio.playLevelUp();
-    game.audio.setMusicForLevel(result.level);
+    // relax mode keeps its continuous playlist; don't switch tracks by level
+    if (!game.state.isRelax) game.audio.setMusicForLevel(result.level);
   }
   game.hud.update(game.state);
 }

@@ -197,3 +197,38 @@ html, body {
 }
 
 .btn-start:active { transform: scale(0.94); }
+
+/* mode selection: two stacked-label buttons side by side */
+.mode-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 28px;
+}
+
+.mode-icon {
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 700;
+}
+
+.mode-sub {
+  font-size: clamp(12px, 2.6vw, 15px);
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+/* relax button: cooler, calmer gradient than the challenge button */
+.mode-relax {
+  background: linear-gradient(135deg, #a8d8ff, #c9b6ff);
+}
+
+/* lives chip hidden in relax mode (no lives to track) */
+.hud-lives.hidden-relax { display: none; }

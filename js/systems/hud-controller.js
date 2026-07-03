@@ -21,12 +21,17 @@ export class HudController {
       gameoverOverlay: document.getElementById('gameover-overlay'),
       gameoverStats: document.getElementById('gameover-stats'),
       btnRestart: document.getElementById('btn-restart'),
+      btnRelax: document.getElementById('btn-relax'),
     };
     this.bannerTimer = null;
   }
 
   onStart(callback) {
     this.el.btnStart.addEventListener('click', callback, { once: true });
+  }
+
+  onRelax(callback) {
+    this.el.btnRelax.addEventListener('click', callback, { once: true });
   }
 
   onRestart(callback) {
@@ -56,8 +61,10 @@ export class HudController {
   update(state) {
     this.el.score.textContent = state.score.toLocaleString('en-US');
     this.el.level.textContent = `Lv ${state.level}`;
+    // relax mode: no lives to show
+    this.el.lives.classList.toggle('hidden-relax', state.isRelax);
     this.el.lives.textContent = `🧡 ${state.lives}`;
-    this.el.lives.classList.toggle('low', state.lives <= 5);
+    this.el.lives.classList.toggle('low', !state.isRelax && state.lives <= 5);
 
     // super weapon shows its countdown and a golden chip
     if (state.superTimeLeft > 0) {
