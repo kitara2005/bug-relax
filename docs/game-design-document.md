@@ -84,7 +84,7 @@ No Vietnamese/English words in gameplay UI.
 - **SFX:** procedural WebAudio (shoot pluck, hit tick, kill chime, level-up arpeggio, soft escape tone).
 - **Rain (🌧 toggle):** looping `assets/audio/rain.mp3` (real light-rainfall recording) layered
   under the music at low volume, follows mute. Button inert if the file is missing. Swap the
-  file to change the rain. (Default: "Sound of light rainfall", Mijesty, CC BY-SA 4.0.)
+  file to change the rain. (Current: a Mixkit rain track, Mixkit Free License.)
 - Mute button. Audio starts on first user gesture (autoplay policy).
 
 ## Tech

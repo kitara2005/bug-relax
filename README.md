@@ -35,9 +35,8 @@ File nào có thì game tự dùng, thiếu thì tự fallback — không cần 
 **Đổi tiếng mưa:** tải file mưa bất kỳ (vd Pixabay), đổi tên thành `rain.mp3`, thả vào `assets/audio/`.
 
 ## Credits
-- Tiếng mưa `assets/audio/rain.mp3`: "Sound of light rainfall" — tác giả *Mijesty*,
-  [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sound_of_light_rainfall.ogg),
-  giấy phép [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) (chuyển sang mp3).
+- Tiếng mưa `assets/audio/rain.mp3`: "rain in the jungle and birds" từ
+  [Mixkit](https://mixkit.co/free-sound-effects/rain/) (Mixkit Free License — miễn phí, không bắt buộc ghi công), chuyển sang mp3.
 
 ## Cấu trúc
 ```
