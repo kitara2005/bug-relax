@@ -217,12 +217,33 @@ html, body {
   justify-content: center;
 }
 
+/* mode buttons: image badge + caption, minimal chrome so the art stands out */
 .mode-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 16px 28px;
+  gap: 8px;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e6edff;
+  transition: transform 0.15s ease;
+}
+
+.mode-btn:active { transform: scale(0.94); }
+
+.mode-badge {
+  width: clamp(96px, 26vw, 132px);
+  height: clamp(96px, 26vw, 132px);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 16px rgba(150, 200, 255, 0.45));
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.mode-btn:hover .mode-badge {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 24px rgba(180, 215, 255, 0.7));
 }
 
 .mode-icon {
@@ -231,14 +252,9 @@ html, body {
 }
 
 .mode-sub {
-  font-size: clamp(12px, 2.6vw, 15px);
-  opacity: 0.8;
-  font-weight: 500;
-}
-
-/* relax button: cooler, calmer gradient than the challenge button */
-.mode-relax {
-  background: linear-gradient(135deg, #a8d8ff, #c9b6ff);
+  font-size: clamp(13px, 2.8vw, 16px);
+  opacity: 0.85;
+  font-weight: 600;
 }
 
 /* lives chip hidden in relax mode (no lives to track) */
