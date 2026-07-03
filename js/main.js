@@ -45,6 +45,7 @@ class Game {
     this.hud.onStart(() => this.start('game'));
     this.hud.onRelax(() => this.start('relax'));
     this.hud.onRestart(() => this.restart());
+    this.hud.onHome(() => this.returnToMenu());
     this.hud.onMute(() => this.audio.toggleMute());
 
     // pause simulation when the tab is hidden (rAF stops; clamp dt on return)
@@ -69,6 +70,20 @@ class Game {
     this.input.down = false; // drop any held auto-fire so restart starts clean
     this.audio.playGameOver();
     this.hud.showGameOver(this.state);
+  }
+
+  /** Menu (☰): pause, clear the field and return to mode selection. */
+  returnToMenu() {
+    this.state.phase = 'start'; // freezes the update loop
+    this.audio.stopMusic();
+    this.bugs = [];
+    this.spawner = new BugSpawner();
+    this.powerUps = new PowerUpManager();
+    this.frenzy = new FrenzySpawner();
+    this.particles = new ParticleSystem();
+    this.texts = new FloatingTextSystem();
+    this.input.down = false;
+    this.hud.showStartOverlay();
   }
 
   /** "Chơi lại": wipe the field and begin a fresh run. */

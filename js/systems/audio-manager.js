@@ -36,6 +36,14 @@ export class AudioManager {
     }
   }
 
+  /** Stop all music (used when returning to the menu). */
+  stopMusic() {
+    this.relaxPlaylist = false;
+    if (this.fadeInterval) { clearInterval(this.fadeInterval); this.fadeInterval = null; }
+    this.tracks.forEach((t) => { if (t) { t.pause(); t.loop = true; } });
+    this.currentTrack = -1;
+  }
+
   /** Relax mode: play all tracks back-to-back on a loop for continuous listening. */
   startRelaxPlaylist() {
     this.relaxPlaylist = true;

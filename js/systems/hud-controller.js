@@ -22,16 +22,23 @@ export class HudController {
       gameoverStats: document.getElementById('gameover-stats'),
       btnRestart: document.getElementById('btn-restart'),
       btnRelax: document.getElementById('btn-relax'),
+      btnHome: document.getElementById('btn-home'),
     };
     this.bannerTimer = null;
   }
 
+  // mode buttons are re-armable (not once) so the player can return to the
+  // menu and pick a different mode; they're only clickable while the overlay shows
   onStart(callback) {
-    this.el.btnStart.addEventListener('click', callback, { once: true });
+    this.el.btnStart.addEventListener('click', callback);
   }
 
   onRelax(callback) {
-    this.el.btnRelax.addEventListener('click', callback, { once: true });
+    this.el.btnRelax.addEventListener('click', callback);
+  }
+
+  onHome(callback) {
+    this.el.btnHome.addEventListener('click', callback);
   }
 
   onRestart(callback) {
@@ -48,6 +55,13 @@ export class HudController {
   hideStartOverlay() {
     this.el.startOverlay.classList.add('hidden');
     this.el.hud.classList.remove('hidden');
+  }
+
+  /** Back to the mode-selection screen (also clears any game-over overlay). */
+  showStartOverlay() {
+    this.el.gameoverOverlay.classList.add('hidden');
+    this.el.startOverlay.classList.remove('hidden');
+    this.el.hud.classList.add('hidden');
   }
 
   /** Weapon icon: image asset when available, emoji fallback. */
